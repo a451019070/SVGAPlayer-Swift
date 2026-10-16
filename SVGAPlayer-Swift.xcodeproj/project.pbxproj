@@ -6,8 +6,22 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FB298B923081C02800EFE2F8 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = FB298B913081C02800EFE2F8 /* SwiftProtobuf */; };
+		FB298B953081C0F000EFE2F8 /* svga.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */; };
+		FB298B973081C63C00EFE2F8 /* SVGAParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B963081C63C00EFE2F8 /* SVGAParser.swift */; };
+		FB298B993081C94900EFE2F8 /* SVGAVideoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B983081C94900EFE2F8 /* SVGAVideoEntity.swift */; };
+		FB298B9B3081D02800EFE2F8 /* SVGAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B9A3081D02800EFE2F8 /* SVGAError.swift */; };
+		FB298B9D3081D93F00EFE2F8 /* Data+Zlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B9C3081D93F00EFE2F8 /* Data+Zlib.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FB298B713081029500EFE2F8 /* SVGAPlayer-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SVGAPlayer-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = svga.pb.swift; sourceTree = "<group>"; };
+		FB298B963081C63C00EFE2F8 /* SVGAParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAParser.swift; sourceTree = "<group>"; };
+		FB298B983081C94900EFE2F8 /* SVGAVideoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVideoEntity.swift; sourceTree = "<group>"; };
+		FB298B9A3081D02800EFE2F8 /* SVGAError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAError.swift; sourceTree = "<group>"; };
+		FB298B9C3081D93F00EFE2F8 /* Data+Zlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Zlib.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -35,6 +49,7 @@
 		FB298B6E3081029500EFE2F8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				FB298B923081C02800EFE2F8 /* SwiftProtobuf in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -43,6 +58,7 @@
 		FB298B683081029500EFE2F8 = {
 			isa = PBXGroup;
 			children = (
+				FB298B893081058800EFE2F8 /* Source */,
 				FB298B733081029500EFE2F8 /* SVGAPlayer-Swift */,
 				FB298B723081029500EFE2F8 /* Products */,
 			);
@@ -54,6 +70,34 @@
 				FB298B713081029500EFE2F8 /* SVGAPlayer-Swift.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FB298B893081058800EFE2F8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FB298B9C3081D93F00EFE2F8 /* Data+Zlib.swift */,
+				FB298B9A3081D02800EFE2F8 /* SVGAError.swift */,
+				FB298B963081C63C00EFE2F8 /* SVGAParser.swift */,
+				FB298B8F30810E7F00EFE2F8 /* pbswift */,
+				FB298B8A308105E200EFE2F8 /* Entity */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		FB298B8A308105E200EFE2F8 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FB298B983081C94900EFE2F8 /* SVGAVideoEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		FB298B8F30810E7F00EFE2F8 /* pbswift */ = {
+			isa = PBXGroup;
+			children = (
+				FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */,
+			);
+			path = pbswift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -73,6 +117,9 @@
 				FB298B733081029500EFE2F8 /* SVGAPlayer-Swift */,
 			);
 			name = "SVGAPlayer-Swift";
+			packageProductDependencies = (
+				FB298B913081C02800EFE2F8 /* SwiftProtobuf */,
+			);
 			productName = "SVGAPlayer-Swift";
 			productReference = FB298B713081029500EFE2F8 /* SVGAPlayer-Swift.app */;
 			productType = "com.apple.product-type.application";
@@ -101,6 +148,9 @@
 			);
 			mainGroup = FB298B683081029500EFE2F8;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FB298B903081C02800EFE2F8 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FB298B723081029500EFE2F8 /* Products */;
 			projectDirPath = "";
@@ -123,6 +173,11 @@
 		FB298B6D3081029500EFE2F8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				FB298B9D3081D93F00EFE2F8 /* Data+Zlib.swift in Sources */,
+				FB298B973081C63C00EFE2F8 /* SVGAParser.swift in Sources */,
+				FB298B9B3081D02800EFE2F8 /* SVGAError.swift in Sources */,
+				FB298B953081C0F000EFE2F8 /* svga.pb.swift in Sources */,
+				FB298B993081C94900EFE2F8 /* SVGAVideoEntity.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
@@ -331,6 +386,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FB298B903081C02800EFE2F8 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.39.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FB298B913081C02800EFE2F8 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB298B903081C02800EFE2F8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB298B693081029500EFE2F8 /* Project object */;
 	validationLevel = 1;
