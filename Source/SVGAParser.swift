@@ -10,7 +10,20 @@ import SwiftProtobuf
 
 class SVGAParser {
     
-    func parseWithURLRequest(_ request: URLRequest) async throws -> SVGAVideoEntity {
+    func parse(with urlStr: String?) async throws -> SVGAVideoEntity {
+        guard let urlStr = urlStr, !urlStr.isEmpty else { throw SVGAError.invalidURL }
+        // 先直接构造；失败时对非法字符（如中文、空格）做 percent-encoding 兜底
+        guard let url = URL(string: urlStr)
+                ?? urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).flatMap(URL.init(string:))
+        else { throw SVGAError.invalidURL }
+        return try await parse(with: url)
+    }
+    
+    func parse(with url: URL) async throws -> SVGAVideoEntity {
+        try await parse(with: URLRequest(url: url))
+    }
+    
+    func parse(with request: URLRequest) async throws -> SVGAVideoEntity {
         guard request.url != nil else { throw SVGAError.invalidURL }
         
         let data: Data
@@ -41,9 +54,11 @@ class SVGAParser {
         } catch {
             throw SVGAError.decodeFailed(error)
         }
-        _ = protoObject
         
-        let entity = SVGAVideoEntity()
+        let entity = SVGAVideoEntity(protoObject: protoObject)
+        entity.resetImages(with: protoObject)
+        entity.resetSprites(with: protoObject)
+        entity.resetAudios(with: protoObject)
         return entity
     }
 }
