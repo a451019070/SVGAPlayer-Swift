@@ -188,7 +188,7 @@
 			packageReferences = (
 				FB7687043083AD5700F512F0 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 60;
 			productRefGroup = FB298B723081029500EFE2F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
