@@ -17,17 +17,12 @@ final class SVGAVideoSpriteFrameEntity {
     private(set) var clipPath: String?
     private(set) var shapes: [SVGAProtoShapeEntity] = []
     
-    private var cachedMaskLayer: CALayer?
-    
-    /// 根据 clipPath 懒加载生成的遮罩图层;没有 clipPath 时为 nil。
-    var maskLayer: CALayer? {
-        if cachedMaskLayer == nil, let clipPath {
-            let bezierPath = SVGABezierPath()
-            bezierPath.setValues(clipPath)
-            cachedMaskLayer = bezierPath.createLayer()
-        }
-        return cachedMaskLayer
-    }
+    private(set) lazy var maskLayer: CALayer? = {
+        guard let clipPath else { return nil }
+        let bezierPath = SVGABezierPath()
+        bezierPath.setValues(clipPath)
+        return bezierPath.createLayer()
+    }()
     
     init(protoObject: SVGAProtoFrameEntity) {
         alpha = CGFloat(protoObject.alpha)

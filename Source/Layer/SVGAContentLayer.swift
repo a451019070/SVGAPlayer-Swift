@@ -20,23 +20,8 @@ final class SVGAContentLayer: CALayer {
         didSet { isHidden = dynamicHidden }
     }
     
-    var bitmapLayer: SVGABitmapLayer? {
-        didSet {
-            oldValue?.removeFromSuperlayer()
-            if let bitmapLayer {
-                addSublayer(bitmapLayer)
-            }
-        }
-    }
-    
-    var vectorLayer: SVGAVectorLayer? {
-        didSet {
-            oldValue?.removeFromSuperlayer()
-            if let vectorLayer {
-                addSublayer(vectorLayer)
-            }
-        }
-    }
+    private(set) var bitmapLayer: SVGABitmapLayer?
+    private(set) var vectorLayer: SVGAVectorLayer?
     
     override var frame: CGRect {
         didSet { layoutSubContent() }
@@ -45,13 +30,30 @@ final class SVGAContentLayer: CALayer {
     private var frames: [SVGAVideoSpriteFrameEntity] = []
     private var textLayerAlignment: NSTextAlignment = .center
     
-    init(frames: [SVGAVideoSpriteFrameEntity]) {
+    init(frames: [SVGAVideoSpriteFrameEntity], bitmap: UIImage? = nil) {
         self.frames = frames
         super.init()
         backgroundColor = UIColor.clear.cgColor
         masksToBounds = false
+        if let bitmap {
+            let bitmapLayer = SVGABitmapLayer(frames: frames)
+            bitmapLayer.contents = bitmap.cgImage
+            addSublayer(bitmapLayer)
+            self.bitmapLayer = bitmapLayer
+        }
+        let vectorLayer = SVGAVectorLayer(frames: frames)
+        addSublayer(vectorLayer)
+        self.vectorLayer = vectorLayer
         stepToFrame(0)
     }
+    
+//    init(frames: [SVGAVideoSpriteFrameEntity]) {
+//        self.frames = frames
+//        super.init()
+//        backgroundColor = UIColor.clear.cgColor
+//        masksToBounds = false
+//        stepToFrame(0)
+//    }
     
     override init(layer: Any) {
         super.init(layer: layer)

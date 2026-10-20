@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB205A9130860E990046F39B /* SVGAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB205A9030860E990046F39B /* SVGAPlayer.swift */; };
+		FB205AE2308614ED0046F39B /* SVGAAudioLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB205AE1308614ED0046F39B /* SVGAAudioLayer.swift */; };
 		FB298B953081C0F000EFE2F8 /* svga.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */; };
 		FB298B973081C63C00EFE2F8 /* SVGAParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B963081C63C00EFE2F8 /* SVGAParser.swift */; };
 		FB298B993081C94900EFE2F8 /* SVGAVideoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B983081C94900EFE2F8 /* SVGAVideoEntity.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB205A9030860E990046F39B /* SVGAPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAPlayer.swift; sourceTree = "<group>"; };
+		FB205AE1308614ED0046F39B /* SVGAAudioLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAAudioLayer.swift; sourceTree = "<group>"; };
 		FB298B713081029500EFE2F8 /* SVGAPlayer-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SVGAPlayer-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = svga.pb.swift; sourceTree = "<group>"; };
 		FB298B963081C63C00EFE2F8 /* SVGAParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAParser.swift; sourceTree = "<group>"; };
@@ -39,7 +43,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		FB298B833081029600EFE2F8 /* Exceptions for "SVGAPlayer-Swift" folder in "SVGAPlayer-Swift" target */ = {
+		FB298B833081029600EFE2F8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -49,22 +53,17 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		FB298B733081029500EFE2F8 /* SVGAPlayer-Swift */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				FB298B833081029600EFE2F8 /* Exceptions for "SVGAPlayer-Swift" folder in "SVGAPlayer-Swift" target */,
-			);
-			path = "SVGAPlayer-Swift";
-			sourceTree = "<group>";
-		};
+		FB298B733081029500EFE2F8 /* SVGAPlayer-Swift */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (FB298B833081029600EFE2F8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "SVGAPlayer-Swift"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		FB298B6E3081029500EFE2F8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				FB76870730843F6B00F512F0 /* SwiftProtobuf in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -93,6 +92,7 @@
 				FB298B9C3081D93F00EFE2F8 /* Data+Zlib.swift */,
 				FB298B9A3081D02800EFE2F8 /* SVGAError.swift */,
 				FB298B963081C63C00EFE2F8 /* SVGAParser.swift */,
+				FB205A9030860E990046F39B /* SVGAPlayer.swift */,
 				FB298B8F30810E7F00EFE2F8 /* pbswift */,
 				FB298B8A308105E200EFE2F8 /* Entity */,
 				FB298BAC3081E20000EFE2F8 /* Layer */,
@@ -122,6 +122,7 @@
 		FB298BAC3081E20000EFE2F8 /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				FB205AE1308614ED0046F39B /* SVGAAudioLayer.swift */,
 				FB298BA43081E20000EFE2F8 /* SVGABezierPath.swift */,
 				FB298BA63081E20000EFE2F8 /* SVGABitmapLayer.swift */,
 				FB298BAA3081E20000EFE2F8 /* SVGAContentLayer.swift */,
@@ -150,6 +151,8 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+			);
 			fileSystemSynchronizedGroups = (
 				FB298B733081029500EFE2F8 /* SVGAPlayer-Swift */,
 			);
@@ -177,6 +180,7 @@
 				};
 			};
 			buildConfigurationList = FB298B6C3081029500EFE2F8 /* Build configuration list for PBXProject "SVGAPlayer-Swift" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -188,7 +192,6 @@
 			packageReferences = (
 				FB7687043083AD5700F512F0 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
-			preferredProjectObjectVersion = 60;
 			productRefGroup = FB298B723081029500EFE2F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -201,33 +204,39 @@
 /* Begin PBXResourcesBuildPhase section */
 		FB298B6F3081029500EFE2F8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FB298B6D3081029500EFE2F8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				FB298B9D3081D93F00EFE2F8 /* Data+Zlib.swift in Sources */,
 				FB298B973081C63C00EFE2F8 /* SVGAParser.swift in Sources */,
 				FB298B9B3081D02800EFE2F8 /* SVGAError.swift in Sources */,
 				FB298B953081C0F000EFE2F8 /* svga.pb.swift in Sources */,
+				FB205AE2308614ED0046F39B /* SVGAAudioLayer.swift in Sources */,
 				FB298B993081C94900EFE2F8 /* SVGAVideoEntity.swift in Sources */,
 				FB298B9F3081E10000EFE2F8 /* SVGAAudioEntity.swift in Sources */,
 				FB298BA13081E10000EFE2F8 /* SVGAVideoSpriteFrameEntity.swift in Sources */,
 				FB298BA33081E10000EFE2F8 /* SVGAVideoSpriteEntity.swift in Sources */,
+				FB205A9130860E990046F39B /* SVGAPlayer.swift in Sources */,
 				FB298BA53081E20000EFE2F8 /* SVGABezierPath.swift in Sources */,
 				FB298BA73081E20000EFE2F8 /* SVGABitmapLayer.swift in Sources */,
 				FB298BA93081E20000EFE2F8 /* SVGAVectorLayer.swift in Sources */,
 				FB298BAB3081E20000EFE2F8 /* SVGAContentLayer.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		FB298B853081029600EFE2F8 /* Debug configuration for PBXNativeTarget "SVGAPlayer-Swift" */ = {
+		FB298B853081029600EFE2F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -259,7 +268,7 @@
 			};
 			name = Debug;
 		};
-		FB298B863081029600EFE2F8 /* Release configuration for PBXNativeTarget "SVGAPlayer-Swift" */ = {
+		FB298B863081029600EFE2F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -291,7 +300,7 @@
 			};
 			name = Release;
 		};
-		FB298B873081029600EFE2F8 /* Debug configuration for PBXProject "SVGAPlayer-Swift" */ = {
+		FB298B873081029600EFE2F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -354,7 +363,7 @@
 			};
 			name = Debug;
 		};
-		FB298B883081029600EFE2F8 /* Release configuration for PBXProject "SVGAPlayer-Swift" */ = {
+		FB298B883081029600EFE2F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -416,17 +425,19 @@
 		FB298B6C3081029500EFE2F8 /* Build configuration list for PBXProject "SVGAPlayer-Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FB298B873081029600EFE2F8 /* Debug configuration for PBXProject "SVGAPlayer-Swift" */,
-				FB298B883081029600EFE2F8 /* Release configuration for PBXProject "SVGAPlayer-Swift" */,
+				FB298B873081029600EFE2F8 /* Debug */,
+				FB298B883081029600EFE2F8 /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		FB298B843081029600EFE2F8 /* Build configuration list for PBXNativeTarget "SVGAPlayer-Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FB298B853081029600EFE2F8 /* Debug configuration for PBXNativeTarget "SVGAPlayer-Swift" */,
-				FB298B863081029600EFE2F8 /* Release configuration for PBXNativeTarget "SVGAPlayer-Swift" */,
+				FB298B853081029600EFE2F8 /* Debug */,
+				FB298B863081029600EFE2F8 /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
@@ -451,5 +462,4 @@
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB298B693081029500EFE2F8 /* Project object */;
-	validationLevel = 1;
 }

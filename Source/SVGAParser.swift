@@ -10,15 +10,6 @@ import SwiftProtobuf
 
 class SVGAParser {
     
-    func parse(with urlStr: String?) async throws -> SVGAVideoEntity {
-        guard let urlStr = urlStr, !urlStr.isEmpty else { throw SVGAError.invalidURL }
-        // 先直接构造；失败时对非法字符（如中文、空格）做 percent-encoding 兜底
-        guard let url = URL(string: urlStr)
-                ?? urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).flatMap(URL.init(string:))
-        else { throw SVGAError.invalidURL }
-        return try await parse(with: url)
-    }
-    
     func parse(with url: URL) async throws -> SVGAVideoEntity {
         try await parse(with: URLRequest(url: url))
     }
