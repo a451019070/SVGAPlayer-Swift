@@ -63,21 +63,7 @@ class SVGAPlayer: UIView {
             guard !imageKey.isEmpty else { continue }
             
             if let text = dynamicTexts[imageKey] {
-                let image = videoItem.images[imageKey]
-                let bitmapSize = CGSize(
-                    width: (image?.size.width ?? 0) * (image?.scale ?? 0),
-                    height: (image?.size.height ?? 0) * (image?.scale ?? 0)
-                )
-                let size = text.boundingRect(with: bitmapSize,
-                                             options: .usesLineFragmentOrigin,
-                                             context: nil).size
-                let textLayer = CATextLayer()
-                textLayer.contentsScale = UIScreen.main.scale
-                textLayer.string = text
-                textLayer.frame = CGRect(origin: .zero, size: size)
-                contentLayer.addSublayer(textLayer)
-                contentLayer.textLayer = textLayer
-                contentLayer.resetTextLayerProperties(text)
+                contentLayer.setText(text, constrainedTo: textConstrainedSize(forKey: imageKey))
             }
             if dynamicHiddens[imageKey] == true {
                 contentLayer.dynamicHidden = true
@@ -99,5 +85,23 @@ class SVGAPlayer: UIView {
     
     // TODO: 待移植
     private func resize() {}
+    
+    // MARK: - Dynamic Text
+    
+    func setAttributedText(_ attributedText: NSAttributedString, forKey key: String) {
+        dynamicTexts[key] = attributedText
+        guard !contentLayers.isEmpty else { return }
+        let constrainedSize = textConstrainedSize(forKey: key)
+        for contentLayer in contentLayers where contentLayer.imageKey == key {
+            contentLayer.setText(attributedText, constrainedTo: constrainedSize)
+        }
+    }
+    
+    /// 文字排版约束尺寸:取原图的像素尺寸。
+    private func textConstrainedSize(forKey key: String) -> CGSize {
+        guard let image = videoItem?.images[key] else { return .zero }
+        return CGSize(width: image.size.width * image.scale,
+                      height: image.size.height * image.scale)
+    }
     
 }

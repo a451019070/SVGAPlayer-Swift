@@ -14,7 +14,7 @@ final class SVGAContentLayer: CALayer {
     
     var imageKey: String?
     var dynamicDrawingBlock: SVGAPlayerDynamicDrawingBlock?
-    var textLayer: CATextLayer?
+    private(set) var textLayer: CATextLayer?
     
     var dynamicHidden = false {
         didSet { isHidden = dynamicHidden }
@@ -130,7 +130,35 @@ final class SVGAContentLayer: CALayer {
     
     // MARK: - Text
     
-    func resetTextLayerProperties(_ attributedString: NSAttributedString) {
+    /// 设置动态文字。可重复调用:首次创建 textLayer,之后复用。
+    /// - Parameters:
+    ///   - text: 要显示的富文本
+    ///   - constrainedSize: 文字排版的约束尺寸(通常为原图像素尺寸)
+    func setText(_ text: NSAttributedString, constrainedTo constrainedSize: CGSize) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        defer { CATransaction.commit() }
+        
+        let textLayer: CATextLayer
+        if let existing = self.textLayer {
+            textLayer = existing
+        } else {
+            textLayer = CATextLayer()
+            addSublayer(textLayer)
+            self.textLayer = textLayer
+        }
+        
+        let size = text.boundingRect(with: constrainedSize,
+                                     options: .usesLineFragmentOrigin,
+                                     context: nil).size
+        textLayer.contentsScale = UIScreen.main.scale
+        textLayer.string = text
+        textLayer.frame = CGRect(origin: .zero, size: size)
+        resetTextLayerProperties(text)
+        layoutSubContent()
+    }
+    
+    private func resetTextLayerProperties(_ attributedString: NSAttributedString) {
         guard attributedString.length > 0,
               let paragraphStyle = attributedString.attributes(at: 0, effectiveRange: nil)[.paragraphStyle] as? NSParagraphStyle
         else { return }
