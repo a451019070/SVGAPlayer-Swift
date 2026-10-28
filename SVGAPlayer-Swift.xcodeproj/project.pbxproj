@@ -7,39 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB205A9130860E990046F39B /* SVGAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB205A9030860E990046F39B /* SVGAPlayer.swift */; };
-		FB205AE2308614ED0046F39B /* SVGAAudioLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB205AE1308614ED0046F39B /* SVGAAudioLayer.swift */; };
-		FB298B953081C0F000EFE2F8 /* svga.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */; };
-		FB298B973081C63C00EFE2F8 /* SVGAParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B963081C63C00EFE2F8 /* SVGAParser.swift */; };
-		FB298B993081C94900EFE2F8 /* SVGAVideoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B983081C94900EFE2F8 /* SVGAVideoEntity.swift */; };
-		FB298B9B3081D02800EFE2F8 /* SVGAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B9A3081D02800EFE2F8 /* SVGAError.swift */; };
-		FB298B9D3081D93F00EFE2F8 /* Data+Zlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B9C3081D93F00EFE2F8 /* Data+Zlib.swift */; };
-		FB298B9F3081E10000EFE2F8 /* SVGAAudioEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298B9E3081E10000EFE2F8 /* SVGAAudioEntity.swift */; };
-		FB298BA13081E10000EFE2F8 /* SVGAVideoSpriteFrameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298BA03081E10000EFE2F8 /* SVGAVideoSpriteFrameEntity.swift */; };
-		FB298BA33081E10000EFE2F8 /* SVGAVideoSpriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298BA23081E10000EFE2F8 /* SVGAVideoSpriteEntity.swift */; };
-		FB298BA53081E20000EFE2F8 /* SVGABezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298BA43081E20000EFE2F8 /* SVGABezierPath.swift */; };
-		FB298BA73081E20000EFE2F8 /* SVGABitmapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298BA63081E20000EFE2F8 /* SVGABitmapLayer.swift */; };
-		FB298BA93081E20000EFE2F8 /* SVGAVectorLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298BA83081E20000EFE2F8 /* SVGAVectorLayer.swift */; };
-		FB298BAB3081E20000EFE2F8 /* SVGAContentLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB298BAA3081E20000EFE2F8 /* SVGAContentLayer.swift */; };
 		FB76870730843F6B00F512F0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = FB76870630843F6B00F512F0 /* SwiftProtobuf */; };
+		FBF913DB3091FF32008D12CB /* svga.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913D23091FF32008D12CB /* svga.pb.swift */; };
+		FBF913DC3091FF32008D12CB /* SVGAVideoSpriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913C93091FF32008D12CB /* SVGAVideoSpriteEntity.swift */; };
+		FBF913DD3091FF32008D12CB /* Data+Zlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913D63091FF32008D12CB /* Data+Zlib.swift */; };
+		FBF913DE3091FF32008D12CB /* SVGAVideoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913C83091FF32008D12CB /* SVGAVideoEntity.swift */; };
+		FBF913DF3091FF32008D12CB /* SVGAContentLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913CF3091FF32008D12CB /* SVGAContentLayer.swift */; };
+		FBF913E03091FF32008D12CB /* SVGAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913D93091FF32008D12CB /* SVGAPlayer.swift */; };
+		FBF913E13091FF32008D12CB /* SVGABezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913CD3091FF32008D12CB /* SVGABezierPath.swift */; };
+		FBF913E23091FF32008D12CB /* SVGAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913D43091FF32008D12CB /* SVGAView.swift */; };
+		FBF913E33091FF32008D12CB /* SVGABitmapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913CE3091FF32008D12CB /* SVGABitmapLayer.swift */; };
+		FBF913E43091FF32008D12CB /* SVGAVectorLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913D03091FF32008D12CB /* SVGAVectorLayer.swift */; };
+		FBF913E53091FF32008D12CB /* SVGAParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913D83091FF32008D12CB /* SVGAParser.swift */; };
+		FBF913E63091FF32008D12CB /* SVGAAudioLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913CC3091FF32008D12CB /* SVGAAudioLayer.swift */; };
+		FBF913E73091FF32008D12CB /* SVGAVideoSpriteFrameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913CA3091FF32008D12CB /* SVGAVideoSpriteFrameEntity.swift */; };
+		FBF913E83091FF32008D12CB /* SVGAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913D73091FF32008D12CB /* SVGAError.swift */; };
+		FBF913E93091FF32008D12CB /* SVGAPlayerCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913C53091FF32008D12CB /* SVGAPlayerCore.swift */; };
+		FBF913EA3091FF32008D12CB /* SVGAAudioEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF913C73091FF32008D12CB /* SVGAAudioEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FB205A9030860E990046F39B /* SVGAPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAPlayer.swift; sourceTree = "<group>"; };
-		FB205AE1308614ED0046F39B /* SVGAAudioLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAAudioLayer.swift; sourceTree = "<group>"; };
 		FB298B713081029500EFE2F8 /* SVGAPlayer-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SVGAPlayer-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = svga.pb.swift; sourceTree = "<group>"; };
-		FB298B963081C63C00EFE2F8 /* SVGAParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAParser.swift; sourceTree = "<group>"; };
-		FB298B983081C94900EFE2F8 /* SVGAVideoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVideoEntity.swift; sourceTree = "<group>"; };
-		FB298B9A3081D02800EFE2F8 /* SVGAError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAError.swift; sourceTree = "<group>"; };
-		FB298B9C3081D93F00EFE2F8 /* Data+Zlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Zlib.swift"; sourceTree = "<group>"; };
-		FB298B9E3081E10000EFE2F8 /* SVGAAudioEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAAudioEntity.swift; sourceTree = "<group>"; };
-		FB298BA03081E10000EFE2F8 /* SVGAVideoSpriteFrameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVideoSpriteFrameEntity.swift; sourceTree = "<group>"; };
-		FB298BA23081E10000EFE2F8 /* SVGAVideoSpriteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVideoSpriteEntity.swift; sourceTree = "<group>"; };
-		FB298BA43081E20000EFE2F8 /* SVGABezierPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGABezierPath.swift; sourceTree = "<group>"; };
-		FB298BA63081E20000EFE2F8 /* SVGABitmapLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGABitmapLayer.swift; sourceTree = "<group>"; };
-		FB298BA83081E20000EFE2F8 /* SVGAVectorLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVectorLayer.swift; sourceTree = "<group>"; };
-		FB298BAA3081E20000EFE2F8 /* SVGAContentLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAContentLayer.swift; sourceTree = "<group>"; };
+		FBF913C53091FF32008D12CB /* SVGAPlayerCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAPlayerCore.swift; sourceTree = "<group>"; };
+		FBF913C73091FF32008D12CB /* SVGAAudioEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAAudioEntity.swift; sourceTree = "<group>"; };
+		FBF913C83091FF32008D12CB /* SVGAVideoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVideoEntity.swift; sourceTree = "<group>"; };
+		FBF913C93091FF32008D12CB /* SVGAVideoSpriteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVideoSpriteEntity.swift; sourceTree = "<group>"; };
+		FBF913CA3091FF32008D12CB /* SVGAVideoSpriteFrameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVideoSpriteFrameEntity.swift; sourceTree = "<group>"; };
+		FBF913CC3091FF32008D12CB /* SVGAAudioLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAAudioLayer.swift; sourceTree = "<group>"; };
+		FBF913CD3091FF32008D12CB /* SVGABezierPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGABezierPath.swift; sourceTree = "<group>"; };
+		FBF913CE3091FF32008D12CB /* SVGABitmapLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGABitmapLayer.swift; sourceTree = "<group>"; };
+		FBF913CF3091FF32008D12CB /* SVGAContentLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAContentLayer.swift; sourceTree = "<group>"; };
+		FBF913D03091FF32008D12CB /* SVGAVectorLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAVectorLayer.swift; sourceTree = "<group>"; };
+		FBF913D23091FF32008D12CB /* svga.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = svga.pb.swift; sourceTree = "<group>"; };
+		FBF913D43091FF32008D12CB /* SVGAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAView.swift; sourceTree = "<group>"; };
+		FBF913D63091FF32008D12CB /* Data+Zlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Zlib.swift"; sourceTree = "<group>"; };
+		FBF913D73091FF32008D12CB /* SVGAError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAError.swift; sourceTree = "<group>"; };
+		FBF913D83091FF32008D12CB /* SVGAParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAParser.swift; sourceTree = "<group>"; };
+		FBF913D93091FF32008D12CB /* SVGAPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGAPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -71,7 +75,7 @@
 		FB298B683081029500EFE2F8 = {
 			isa = PBXGroup;
 			children = (
-				FB298B893081058800EFE2F8 /* Source */,
+				FBF913DA3091FF32008D12CB /* Source */,
 				FB298B733081029500EFE2F8 /* SVGAPlayer-Swift */,
 				FB76870530843F6B00F512F0 /* Frameworks */,
 				FB298B723081029500EFE2F8 /* Products */,
@@ -86,56 +90,74 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FB298B893081058800EFE2F8 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				FB298B9C3081D93F00EFE2F8 /* Data+Zlib.swift */,
-				FB298B9A3081D02800EFE2F8 /* SVGAError.swift */,
-				FB298B963081C63C00EFE2F8 /* SVGAParser.swift */,
-				FB205A9030860E990046F39B /* SVGAPlayer.swift */,
-				FB298B8F30810E7F00EFE2F8 /* pbswift */,
-				FB298B8A308105E200EFE2F8 /* Entity */,
-				FB298BAC3081E20000EFE2F8 /* Layer */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
-		FB298B8A308105E200EFE2F8 /* Entity */ = {
-			isa = PBXGroup;
-			children = (
-				FB298B9E3081E10000EFE2F8 /* SVGAAudioEntity.swift */,
-				FB298B983081C94900EFE2F8 /* SVGAVideoEntity.swift */,
-				FB298BA23081E10000EFE2F8 /* SVGAVideoSpriteEntity.swift */,
-				FB298BA03081E10000EFE2F8 /* SVGAVideoSpriteFrameEntity.swift */,
-			);
-			path = Entity;
-			sourceTree = "<group>";
-		};
-		FB298B8F30810E7F00EFE2F8 /* pbswift */ = {
-			isa = PBXGroup;
-			children = (
-				FB298B8E30810E7F00EFE2F8 /* svga.pb.swift */,
-			);
-			path = pbswift;
-			sourceTree = "<group>";
-		};
-		FB298BAC3081E20000EFE2F8 /* Layer */ = {
-			isa = PBXGroup;
-			children = (
-				FB205AE1308614ED0046F39B /* SVGAAudioLayer.swift */,
-				FB298BA43081E20000EFE2F8 /* SVGABezierPath.swift */,
-				FB298BA63081E20000EFE2F8 /* SVGABitmapLayer.swift */,
-				FB298BAA3081E20000EFE2F8 /* SVGAContentLayer.swift */,
-				FB298BA83081E20000EFE2F8 /* SVGAVectorLayer.swift */,
-			);
-			path = Layer;
-			sourceTree = "<group>";
-		};
 		FB76870530843F6B00F512F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FBF913C63091FF32008D12CB /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				FBF913C53091FF32008D12CB /* SVGAPlayerCore.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		FBF913CB3091FF32008D12CB /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FBF913C73091FF32008D12CB /* SVGAAudioEntity.swift */,
+				FBF913C83091FF32008D12CB /* SVGAVideoEntity.swift */,
+				FBF913C93091FF32008D12CB /* SVGAVideoSpriteEntity.swift */,
+				FBF913CA3091FF32008D12CB /* SVGAVideoSpriteFrameEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		FBF913D13091FF32008D12CB /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				FBF913CC3091FF32008D12CB /* SVGAAudioLayer.swift */,
+				FBF913CD3091FF32008D12CB /* SVGABezierPath.swift */,
+				FBF913CE3091FF32008D12CB /* SVGABitmapLayer.swift */,
+				FBF913CF3091FF32008D12CB /* SVGAContentLayer.swift */,
+				FBF913D03091FF32008D12CB /* SVGAVectorLayer.swift */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		FBF913D33091FF32008D12CB /* pbswift */ = {
+			isa = PBXGroup;
+			children = (
+				FBF913D23091FF32008D12CB /* svga.pb.swift */,
+			);
+			path = pbswift;
+			sourceTree = "<group>";
+		};
+		FBF913D53091FF32008D12CB /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				FBF913D43091FF32008D12CB /* SVGAView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		FBF913DA3091FF32008D12CB /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FBF913C63091FF32008D12CB /* Core */,
+				FBF913CB3091FF32008D12CB /* Entity */,
+				FBF913D13091FF32008D12CB /* Layer */,
+				FBF913D33091FF32008D12CB /* pbswift */,
+				FBF913D53091FF32008D12CB /* SwiftUI */,
+				FBF913D63091FF32008D12CB /* Data+Zlib.swift */,
+				FBF913D73091FF32008D12CB /* SVGAError.swift */,
+				FBF913D83091FF32008D12CB /* SVGAParser.swift */,
+				FBF913D93091FF32008D12CB /* SVGAPlayer.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,20 +238,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB298B9D3081D93F00EFE2F8 /* Data+Zlib.swift in Sources */,
-				FB298B973081C63C00EFE2F8 /* SVGAParser.swift in Sources */,
-				FB298B9B3081D02800EFE2F8 /* SVGAError.swift in Sources */,
-				FB298B953081C0F000EFE2F8 /* svga.pb.swift in Sources */,
-				FB205AE2308614ED0046F39B /* SVGAAudioLayer.swift in Sources */,
-				FB298B993081C94900EFE2F8 /* SVGAVideoEntity.swift in Sources */,
-				FB298B9F3081E10000EFE2F8 /* SVGAAudioEntity.swift in Sources */,
-				FB298BA13081E10000EFE2F8 /* SVGAVideoSpriteFrameEntity.swift in Sources */,
-				FB298BA33081E10000EFE2F8 /* SVGAVideoSpriteEntity.swift in Sources */,
-				FB205A9130860E990046F39B /* SVGAPlayer.swift in Sources */,
-				FB298BA53081E20000EFE2F8 /* SVGABezierPath.swift in Sources */,
-				FB298BA73081E20000EFE2F8 /* SVGABitmapLayer.swift in Sources */,
-				FB298BA93081E20000EFE2F8 /* SVGAVectorLayer.swift in Sources */,
-				FB298BAB3081E20000EFE2F8 /* SVGAContentLayer.swift in Sources */,
+				FBF913DB3091FF32008D12CB /* svga.pb.swift in Sources */,
+				FBF913DC3091FF32008D12CB /* SVGAVideoSpriteEntity.swift in Sources */,
+				FBF913DD3091FF32008D12CB /* Data+Zlib.swift in Sources */,
+				FBF913DE3091FF32008D12CB /* SVGAVideoEntity.swift in Sources */,
+				FBF913DF3091FF32008D12CB /* SVGAContentLayer.swift in Sources */,
+				FBF913E03091FF32008D12CB /* SVGAPlayer.swift in Sources */,
+				FBF913E13091FF32008D12CB /* SVGABezierPath.swift in Sources */,
+				FBF913E23091FF32008D12CB /* SVGAView.swift in Sources */,
+				FBF913E33091FF32008D12CB /* SVGABitmapLayer.swift in Sources */,
+				FBF913E43091FF32008D12CB /* SVGAVectorLayer.swift in Sources */,
+				FBF913E53091FF32008D12CB /* SVGAParser.swift in Sources */,
+				FBF913E63091FF32008D12CB /* SVGAAudioLayer.swift in Sources */,
+				FBF913E73091FF32008D12CB /* SVGAVideoSpriteFrameEntity.swift in Sources */,
+				FBF913E83091FF32008D12CB /* SVGAError.swift in Sources */,
+				FBF913E93091FF32008D12CB /* SVGAPlayerCore.swift in Sources */,
+				FBF913EA3091FF32008D12CB /* SVGAAudioEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

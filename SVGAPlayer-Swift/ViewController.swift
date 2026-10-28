@@ -15,6 +15,19 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var colorStackView: UIStackView!
     
+    let items = [
+        "https://raw.giteeusercontent.com/hanchao073/SVGA-Samples/raw/master/heartbeat.svga?metadata=eyJyIjoibWFzdGVyIiwiZnAiOiJoZWFydGJlYXQuc3ZnYSIsInVpZCI6NzM4NDM2LCJwaWQiOjE2NTc3NzQxLCJzdG8iOiJnaXQtc2hhcmRpbmctc3RvLTQydC0wMDYiLCJycCI6InJlcG9zLzJmLzhjLzJmOGM1ZWU3OGU5YTdkMWE0MmQxNzM0ODE5ODY4Y2JkM2QzYzg2MTQxMTIxMzY4N2UxNTRmNzMwOTM3NmJmZTcuZ2l0IiwiaXNwIjp0cnVlLCJleHBpcmVfYXQiOjE3OTMxNzg2MDB9&signature=V8OT9h61VG_8fPf4qhLTDwPqtDfNUZqlum_mXaCZMnE",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/EmptyState.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/HamburgerArrow.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/PinJump.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/TwitterHeart.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/Walkthrough.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/angel.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/halloween.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/kingset.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/posche.svga?raw=true",
+        "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/rose.svga?raw=true",
+    ]
     private var svgaIndex = 0
     
     
@@ -22,35 +35,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        
-        
-        
-//        player.contentMode = .scaleAspectFit
-//        view.addSubview(player)
-//        player.frame = .init(origin: .zero, size: .init(width: view.bounds.size.width, height: view.bounds.size.width))
-//        player.center = view.center
+        self.play()
+    }
+    
+    @IBAction func playLast(_ sender: Any) {
+        svgaIndex -= 1
+        if svgaIndex < 0{
+            svgaIndex = items.count - 1
+        }
+        play()
+    }
+    
+    @IBAction func playNext(_ sender: UIButton) {
+        svgaIndex += 1
+        play()
     }
     
     
-    @IBAction func changSvga(_ sender: UIButton) {
-        
-        let items = [
-//            Bundle.main.url(forResource: "haveVoice", withExtension: ".svga")!.absoluteString,
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/EmptyState.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/HamburgerArrow.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/PinJump.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/TwitterHeart.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/Walkthrough.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/angel.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/halloween.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/kingset.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/posche.svga?raw=true",
-            "https://cdn.jsdelivr.net/gh/svga/SVGA-Samples@master/rose.svga?raw=true",
-        ]
+    private func play() {
         guard let url = URL(string: items[svgaIndex % items.count]) else { return }
-        svgaIndex += 1
-
         Task { [weak self] in
             guard let self else { return }
             do {
@@ -62,6 +65,7 @@ class ViewController: UIViewController {
             }
         }
     }
+    
     
 
     @IBAction func changeToWhite(_ sender: UIButton) {

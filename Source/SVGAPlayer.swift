@@ -6,6 +6,88 @@
 //
 
 import UIKit
+
+/// UIKit 封装:所有播放逻辑都在 SVGAPlayerCore。
+/// 状态类属性(contentMode、loopCount、替换图片、动态文本、回调等)统一通过 `configuration` 设置,
+/// 新增配置项时这里不需要改动。
+class SVGAPlayer: UIView {
+    
+    private let core = SVGAPlayerCore()
+    
+    /// 播放配置。修改后立即同步给 core(内部按差异更新)。
+    /// 例:`player.configuration.loopCount = 3`
+    var configuration = SVGAConfiguration() {
+        didSet { core.apply(configuration) }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
+        core.hostLayer = layer
+        // 以 UIView 当前的 contentMode(含 storyboard 设置)为初始值
+        configuration.contentMode = contentMode
+        core.apply(configuration)
+        core.layout(size: bounds.size)
+    }
+    
+    // MARK: - Layout
+    
+    override var contentMode: UIView.ContentMode {
+        didSet { configuration.contentMode = contentMode }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        core.layout(size: bounds.size)
+    }
+    
+    // MARK: - Commands(命令类:只转发,新增时在这里加一行)
+    
+    func setVideoEntity(_ videoItem: SVGAVideoEntity) {
+        core.setVideoEntity(videoItem)
+    }
+    
+    func clear() {
+        core.clear()
+    }
+    
+    /// 从第 0 帧开始播放。
+    func starAnimation() {
+        core.stop(clear: false)
+        core.play()
+    }
+    
+    func pauseAnimation() {
+        core.pause()
+    }
+    
+    func stopAnimation(clearAfterStop: Bool = true) {
+        core.stop(clear: clearAfterStop)
+    }
+    
+    // MARK: - Convenience
+    
+    func setAttributedText(_ attributedText: NSAttributedString, forKey key: String) {
+        configuration.dynamic.texts[key] = attributedText
+    }
+    
+    func setImage(_ image: UIImage?, forKey key: String) {
+        configuration.dynamic.images[key] = image
+    }
+}
+
+// MARK: - 旧实现(已迁移到 SVGAPlayerCore)
+
+/*
+import UIKit
 internal import AVFAudio
 
 
@@ -253,3 +335,4 @@ extension SVGAPlayer {
         }
     }
 }
+*/
