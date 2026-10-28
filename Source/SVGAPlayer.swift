@@ -11,21 +11,110 @@ internal import AVFAudio
 
 class SVGAPlayer: UIView {
     
-    var videoItem: SVGAVideoEntity?
+    private var videoItem: SVGAVideoEntity?
     
     private var drawLayer: CALayer?
     private var audioLayers: [SVGAAudioLayer] = []
     private var contentLayers: [SVGAContentLayer] = []
     private var currentFrame = 0
     private var forwardAnimating = false
+    private var displayLink: CADisplayLink?
     
     private var dynamicObjects: [String: UIImage] = [:]
     private var dynamicTexts: [String: NSAttributedString] = [:]
     private var dynamicDrawings: [String: SVGAPlayerDynamicDrawingBlock] = [:]
     private var dynamicHiddens: [String: Bool] = [:]
     
-    // MARK: - Draw
+    // MARK: - Layout
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        resize()
+    }
     
+    func setVideoEntity(_ videoItem :SVGAVideoEntity) {
+        self.videoItem = videoItem
+        DispatchQueue.main.async {
+            self.clear()
+            self.draw()
+        }
+    }
+    
+    func clear() {
+        self.contentLayers = []
+        self.drawLayer?.removeFromSuperlayer()
+        self.drawLayer = nil
+    }
+    
+    func starAnimation() {
+        guard let videoItem else {
+            print("videoItem could not be nil!")
+            return
+        }
+        if drawLayer == nil {
+            setVideoEntity(videoItem)
+        }
+        stopAnimation(clearAfterStop: false)
+        currentFrame = 0
+        guard videoItem.fps > 0 else {
+            print("videoItem fps could not be 0!")
+            return
+        }
+        let displayLink = CADisplayLink(target: self, selector: #selector(nextFrame))
+        
+        displayLink.preferredFramesPerSecond = videoItem.fps
+        displayLink.add(to: .main, forMode: .common)
+        self.displayLink = displayLink
+        forwardAnimating = true
+    }
+    func stopAnimation(clearAfterStop: Bool = true) {
+        forwardAnimating = false
+        displayLink?.invalidate()
+        displayLink = nil
+        clearAudios()
+        if clearAfterStop {
+            clear()
+        }
+    }
+
+    private func clearAudios() {
+        for audioLayer in audioLayers where audioLayer.audioPlaying {
+            audioLayer.audioPlayer?.stop()
+            audioLayer.audioPlaying = false
+        }
+    }
+
+    @objc private func nextFrame() {
+        currentFrame += 1
+        if currentFrame >= (videoItem?.frames ?? 0) {
+            currentFrame = 0
+            clearAudios()
+        }
+        update()
+    }
+}
+
+extension SVGAPlayer {
+    // MARK: - Dynamic Text
+    func setAttributedText(_ attributedText: NSAttributedString, forKey key: String) {
+        dynamicTexts[key] = attributedText
+        guard !contentLayers.isEmpty else { return }
+        let constrainedSize = textConstrainedSize(forKey: key)
+        for contentLayer in contentLayers where contentLayer.imageKey == key {
+            contentLayer.setText(attributedText, constrainedTo: constrainedSize)
+        }
+    }
+    
+    /// 文字排版约束尺寸:取原图的像素尺寸。
+    private func textConstrainedSize(forKey key: String) -> CGSize {
+        guard let image = videoItem?.images[key] else { return .zero }
+        return CGSize(width: image.size.width * image.scale,
+                      height: image.size.height * image.scale)
+    }
+}
+
+
+extension SVGAPlayer {
+    // MARK: - Draw
     private func draw() {
         guard let videoItem else { return }
         
@@ -105,12 +194,6 @@ class SVGAPlayer: UIView {
         }
     }
     
-    // MARK: - Layout
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        resize()
-    }
     
     private func resize() {
         guard let videoItem, let drawLayer else { return }
@@ -169,23 +252,4 @@ class SVGAPlayer: UIView {
                                                 scaleY: frameSize.height / videoSize.height)
         }
     }
-    
-    // MARK: - Dynamic Text
-    
-    func setAttributedText(_ attributedText: NSAttributedString, forKey key: String) {
-        dynamicTexts[key] = attributedText
-        guard !contentLayers.isEmpty else { return }
-        let constrainedSize = textConstrainedSize(forKey: key)
-        for contentLayer in contentLayers where contentLayer.imageKey == key {
-            contentLayer.setText(attributedText, constrainedTo: constrainedSize)
-        }
-    }
-    
-    /// 文字排版约束尺寸:取原图的像素尺寸。
-    private func textConstrainedSize(forKey key: String) -> CGSize {
-        guard let image = videoItem?.images[key] else { return .zero }
-        return CGSize(width: image.size.width * image.scale,
-                      height: image.size.height * image.scale)
-    }
-    
 }

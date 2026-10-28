@@ -15,7 +15,17 @@ class SVGAParser {
     }
     
     func parse(with request: URLRequest) async throws -> SVGAVideoEntity {
-        guard request.url != nil else { throw SVGAError.invalidURL }
+        guard let url = request.url else { throw SVGAError.invalidURL }
+        
+        if url.isFileURL {
+            let fileData: Data
+            do {
+                fileData = try Data(contentsOf: url)
+            } catch {
+                throw SVGAError.network(error)
+            }
+            return try await parseWithData(fileData)
+        }
         
         let data: Data
         let response: URLResponse
