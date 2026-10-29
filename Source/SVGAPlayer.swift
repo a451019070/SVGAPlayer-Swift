@@ -7,6 +7,18 @@
 
 import UIKit
 
+protocol SVGAPlayerDelegate: AnyObject {
+    func svgaPlayerDidFinishedAnimation(_ player: SVGAPlayer)
+    func svgaPlayer(_ player: SVGAPlayer, didAnimatedToFrame frame: Int)
+    func svgaPlayer(_ player: SVGAPlayer, didAnimatedToPercentage percentage: CGFloat)
+}
+
+extension SVGAPlayerDelegate {
+    func svgaPlayerDidFinishedAnimation(_ player: SVGAPlayer) {}
+    func svgaPlayer(_ player: SVGAPlayer, didAnimatedToFrame frame: Int) {}
+    func svgaPlayer(_ player: SVGAPlayer, didAnimatedToPercentage percentage: CGFloat) {}
+}
+
 /// UIKit 封装:所有播放逻辑都在 SVGAPlayerCore。
 /// 状态类属性(contentMode、loopCount、替换图片、动态文本、回调等)统一通过 `configuration` 设置,
 /// 新增配置项时这里不需要改动。
@@ -14,10 +26,12 @@ class SVGAPlayer: UIView {
     
     private let core = SVGAPlayerCore()
     
+    weak var delegate: SVGAPlayerDelegate?
+    
     /// 播放配置。修改后立即同步给 core(内部按差异更新)。
     /// 例:`player.configuration.loopCount = 3`
     var configuration = SVGAConfiguration() {
-        didSet { core.apply(configuration) }
+        didSet { syncConfiguration() }
     }
     
     override init(frame: CGRect) {
@@ -34,8 +48,47 @@ class SVGAPlayer: UIView {
         core.hostLayer = layer
         // 以 UIView 当前的 contentMode(含 storyboard 设置)为初始值
         configuration.contentMode = contentMode
-        core.apply(configuration)
+        syncConfiguration()
         core.layout(size: bounds.size)
+    }
+    
+    /// 在用户配置的回调之外追加 delegate 通知,再交给 core。
+    private func syncConfiguration() {
+        var config = configuration
+        let userOnFinish = config.onFinish
+        let userOnFrame = config.onFrame
+        config.onFinish = { [weak self] in
+            userOnFinish?()
+            guard let self else { return }
+            self.delegate?.svgaPlayerDidFinishedAnimation(self)
+        }
+        config.onFrame = { [weak self] frame, percentage in
+            userOnFrame?(frame, percentage)
+            guard let self, let delegate = self.delegate else { return }
+            delegate.svgaPlayer(self, didAnimatedToFrame: frame)
+            delegate.svgaPlayer(self, didAnimatedToPercentage: percentage)
+        }
+        core.apply(config)
+    }
+    
+    // MARK: - Configuration Shortcuts
+    
+    /// 播放次数。0 表示无限循环。
+    var loops: Int {
+        get { configuration.loopCount }
+        set { configuration.loopCount = newValue }
+    }
+    
+    /// 播放结束 / `stopAnimation()` 时是否清空画面。默认 true。
+    var clearsAfterStop: Bool {
+        get { configuration.clearsAfterStop }
+        set { configuration.clearsAfterStop = newValue }
+    }
+    
+    /// `clearsAfterStop == false` 时播放结束停留的帧。
+    var fillMode: SVGAFillMode {
+        get { configuration.fillMode }
+        set { configuration.fillMode = newValue }
     }
     
     // MARK: - Layout
@@ -49,6 +102,15 @@ class SVGAPlayer: UIView {
         core.layout(size: bounds.size)
     }
     
+    /// 与原版一致:从父视图移除时停止并清空(不受 clearsAfterStop 影响)。
+    /// 重新加入父视图后不会自动播放,需要再次调用 startAnimation()。
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        if newSuperview == nil {
+            stopAnimation(clearAfterStop: true)
+        }
+    }
+    
     // MARK: - Commands(命令类:只转发,新增时在这里加一行)
     
     func setVideoEntity(_ videoItem: SVGAVideoEntity) {
@@ -60,8 +122,19 @@ class SVGAPlayer: UIView {
     }
     
     /// 从第 0 帧开始播放。
-    func starAnimation() {
+    func startAnimation() {
         core.stop(clear: false)
+        core.play()
+    }
+    
+    @available(*, deprecated, renamed: "startAnimation")
+    func starAnimation() {
+        startAnimation()
+    }
+    
+    /// 从当前帧继续播放(音频同步定位)。
+    /// 未播放过或已被清空时从头播放;已播完(达到 loops)时从头重播;正在播放时无效果。
+    func resumeAnimation() {
         core.play()
     }
     
@@ -69,18 +142,47 @@ class SVGAPlayer: UIView {
         core.pause()
     }
     
-    func stopAnimation(clearAfterStop: Bool = true) {
+    /// 停止,是否清空由 `clearsAfterStop` 决定。
+    func stopAnimation() {
+        core.stop(clear: clearsAfterStop)
+    }
+    
+    func stopAnimation(clearAfterStop: Bool) {
         core.stop(clear: clearAfterStop)
     }
     
-    // MARK: - Convenience
+    // MARK: - Dynamic Object
     
     func setAttributedText(_ attributedText: NSAttributedString, forKey key: String) {
         configuration.dynamic.texts[key] = attributedText
     }
     
+    /// 替换图片。传 nil 移除替换,恢复原图。
     func setImage(_ image: UIImage?, forKey key: String) {
         configuration.dynamic.images[key] = image
+    }
+    
+    /// 下载图片后替换。失败时静默忽略。
+    func setImage(withURL url: URL, forKey key: String) {
+        Task { [weak self] in
+            guard let (data, _) = try? await URLSession.shared.data(from: url),
+                  let image = UIImage(data: data) else { return }
+            self?.setImage(image, forKey: key)
+        }
+    }
+    
+    func setHidden(_ hidden: Bool, forKey key: String) {
+        configuration.dynamic.hiddens[key] = hidden
+    }
+    
+    /// 传 nil 移除自绘。
+    func setDrawingBlock(_ drawingBlock: SVGAPlayerDynamicDrawingBlock?, forKey key: String) {
+        configuration.dynamic.drawings[key] = drawingBlock
+    }
+    
+    /// 清除所有动态图片、文本、隐藏、自绘设置。
+    func clearDynamicObjects() {
+        configuration.dynamic = SVGADynamicContent()
     }
 }
 

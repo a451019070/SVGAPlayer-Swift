@@ -84,6 +84,18 @@ extension SVGAView {
     func onFinish(_ action: @escaping () -> Void) -> SVGAView {
         configure { $0.onFinish = action }
     }
+    
+    func onFrame(_ action: @escaping (_ frame: Int, _ percentage: CGFloat) -> Void) -> SVGAView {
+        configure { $0.onFrame = action }
+    }
+    
+    func clearsAfterStop(_ clears: Bool) -> SVGAView {
+        configure { $0.clearsAfterStop = clears }
+    }
+    
+    func fillMode(_ mode: SVGAFillMode) -> SVGAView {
+        configure { $0.fillMode = mode }
+    }
 }
 
 /// 只负责提供 layer,并在布局变化时回调尺寸。

@@ -57,7 +57,9 @@ final class SVGAPlayerCore {
     private func applyDynamic(_ new: SVGADynamicContent, old: SVGADynamicContent) {
         guard drawLayer != nil else { return }
         
-        if new.images != old.images {
+        // 图片变化、或有文本被移除(已挂载的文字图层无法单独摘除)时,重建图层树
+        let textRemoved = old.texts.keys.contains { new.texts[$0] == nil }
+        if new.images != old.images || textRemoved {
             clear()
             draw()
             return
@@ -145,18 +147,29 @@ final class SVGAPlayerCore {
             clearAudios()
             let loopCount = configuration.loopCount
             if loopCount > 0 && playedLoops >= loopCount {
-                currentFrame = max(totalFrames - 1, 0)
-                finish()
+                finish(totalFrames: totalFrames)
                 return
             }
             currentFrame = 0
         }
         update()
+        if totalFrames > 0 {
+            configuration.onFrame?(currentFrame, CGFloat(currentFrame + 1) / CGFloat(totalFrames))
+        }
     }
     
-    private func finish() {
+    private func finish(totalFrames: Int) {
         pause()
         isFinished = true
+        if configuration.clearsAfterStop {
+            clear()
+        } else {
+            switch configuration.fillMode {
+            case .forward: currentFrame = max(totalFrames - 1, 0)
+            case .backward: currentFrame = 0
+            }
+            update()
+        }
         configuration.onFinish?()
     }
     
@@ -340,7 +353,10 @@ final class SVGAPlayerCore {
         for audioLayer in audioLayers {
             let item = audioLayer.audioItem
             if !audioLayer.audioPlaying && item.startFrame <= currentFrame && currentFrame <= item.endFrame {
-                audioLayer.audioPlayer?.currentTime = TimeInterval(item.startTime / 1000)
+                // 按当前帧相对音频起始帧的偏移定位,暂停后继续播放时音画保持同步
+                let fps = Double(videoItem?.fps ?? 0)
+                let frameOffset = fps > 0 ? Double(currentFrame - item.startFrame) / fps : 0
+                audioLayer.audioPlayer?.currentTime = TimeInterval(item.startTime) / 1000 + frameOffset
                 audioLayer.audioPlayer?.play()
                 audioLayer.audioPlaying = true
             }

@@ -59,7 +59,7 @@ class ViewController: UIViewController {
             do {
                 let videoItem = try await self.parser.parse(with: url)
                 self.player.setVideoEntity(videoItem)
-                self.player.starAnimation()
+                self.player.startAnimation()
             } catch { error
                 print("SVGA 加载失败: \(url)")
             }
