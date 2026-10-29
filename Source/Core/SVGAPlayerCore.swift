@@ -39,6 +39,8 @@ final class SVGAPlayerCore {
     }
     private var displayLink: CADisplayLink?
     private var viewSize: CGSize = .zero
+    /// 与 UIView 默认值一致;实际值由宿主通过 layout(size:contentMode:) 传入。
+    private var contentMode: UIView.ContentMode = .scaleToFill
     
     deinit {
         displayLink?.invalidate()
@@ -46,17 +48,22 @@ final class SVGAPlayerCore {
     
     // MARK: - Entity
     
-    /// 设置资源。相同实例重复设置会被忽略;传 nil 则停止并清空。
+    /// 设置资源。相同实例重复设置会被忽略。
+    /// 播放中:不中断,从新资源第 0 帧接着播(帧率换成新资源的);未播放:只显示第 0 帧。
+    /// 传 nil 时清空画面并停止。
     func setVideoEntity(_ entity: SVGAVideoEntity?) {
         guard entity !== videoItem else { return }
-        pauseAnimation()
         clear()
         currentFrame = 0
         playedLoops = 0
         videoItem = entity
-        if entity != nil {
-            draw()
+        if let fps = entity?.fps, fps > 0 {
+            displayLink?.preferredFramesPerSecond = fps
+        } else {
+            // 没有可播内容时 displayLink 空跑会误触发播完回调,需要停掉
+            pauseAnimation()
         }
+        draw()
     }
     
     // MARK: - Playback
@@ -250,10 +257,6 @@ extension SVGAPlayerCore{
     func apply(_ newConfiguration: SVGAConfiguration) {
         let old = configuration
         configuration = newConfiguration
-        
-        if newConfiguration.contentMode != old.contentMode {
-            applyLayout()
-        }
         applyDynamic(newConfiguration.dynamic, old: old.dynamic)
     }
     
@@ -303,10 +306,11 @@ extension SVGAPlayerCore {
 
 // MARK: - Layout
 extension SVGAPlayerCore{
-    /// 宿主尺寸变化时调用。
-    func layout(size: CGSize) {
-        guard size != viewSize else { return }
+    /// 宿主尺寸或 contentMode 变化时调用。contentMode 由宿主 UIView 提供。
+    func layout(size: CGSize, contentMode: UIView.ContentMode) {
+        guard size != viewSize || contentMode != self.contentMode else { return }
         viewSize = size
+        self.contentMode = contentMode
         applyLayout()
     }
     
@@ -318,7 +322,7 @@ extension SVGAPlayerCore{
         CATransaction.setDisableActions(true)
         drawLayer.transform = Self.transform(videoSize: videoItem.videoSize,
                                              viewSize: viewSize,
-                                             contentMode: configuration.contentMode)
+                                             contentMode: contentMode)
         CATransaction.commit()
     }
 }

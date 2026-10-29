@@ -13,6 +13,8 @@ struct SVGAView: UIViewRepresentable {
     var entity: SVGAVideoEntity?
     @Binding var isPlaying: Bool
     var configuration = SVGAConfiguration()
+    /// 为 nil 时不修改宿主 View,使用 UIView 默认的 contentMode。
+    var contentMode: UIView.ContentMode?
     
     func makeCoordinator() -> Coordinator {
         Coordinator()
@@ -25,14 +27,18 @@ struct SVGAView: UIViewRepresentable {
         
         let core = context.coordinator.core
         core.hostLayer = view.layer
-        view.onLayout = { [weak core] size in
-            core?.layout(size: size)
+        view.onLayout = { [weak core] size, contentMode in
+            core?.layout(size: size, contentMode: contentMode)
         }
         return view
     }
     
     func updateUIView(_ uiView: SVGAHostView, context: Context) {
         let core = context.coordinator.core
+        
+        if let contentMode, uiView.contentMode != contentMode {
+            uiView.contentMode = contentMode
+        }
         
         // 播放完成后把 isPlaying 置回 false,避免下一次刷新又自动重播。
         var config = configuration
@@ -74,7 +80,9 @@ extension SVGAView {
     }
     
     func contentMode(_ mode: UIView.ContentMode) -> SVGAView {
-        configure { $0.contentMode = mode }
+        var copy = self
+        copy.contentMode = mode
+        return copy
     }
     
     func loopCount(_ count: Int) -> SVGAView {
@@ -98,13 +106,17 @@ extension SVGAView {
     }
 }
 
-/// 只负责提供 layer,并在布局变化时回调尺寸。
+/// 只负责提供 layer,并在布局或 contentMode 变化时回调。
 final class SVGAHostView: UIView {
     
-    var onLayout: ((CGSize) -> Void)?
+    var onLayout: ((CGSize, UIView.ContentMode) -> Void)?
+    
+    override var contentMode: UIView.ContentMode {
+        didSet { onLayout?(bounds.size, contentMode) }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        onLayout?(bounds.size)
+        onLayout?(bounds.size, contentMode)
     }
 }

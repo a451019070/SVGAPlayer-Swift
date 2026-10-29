@@ -27,8 +27,8 @@ enum SVGAFillMode {
     case backward
 }
 
+/// contentMode 不在这里:以宿主 UIView 自身的 contentMode 为准。
 struct SVGAConfiguration {
-    var contentMode: UIView.ContentMode = .scaleAspectFit
     /// 播放次数。0 表示无限循环。
     var loopCount = 0
     /// 播放结束 / 停止时是否清空画面(与原版一致,默认 true)。

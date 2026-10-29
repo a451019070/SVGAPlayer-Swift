@@ -20,7 +20,8 @@ extension SVGAPlayerDelegate {
 }
 
 /// UIKit 封装:所有播放逻辑都在 SVGAPlayerCore。
-/// 状态类属性(contentMode、loopCount、替换图片、动态文本、回调等)统一通过 `configuration` 设置,
+/// 状态类属性(loopCount、替换图片、动态文本、回调等)统一通过 `configuration` 设置,
+/// 缩放方式用 UIView 自身的 `contentMode`。
 /// 新增配置项时这里不需要改动。
 class SVGAPlayer: UIView {
     
@@ -46,10 +47,8 @@ class SVGAPlayer: UIView {
     
     private func setup() {
         core.hostLayer = layer
-        // 以 UIView 当前的 contentMode(含 storyboard 设置)为初始值
-        configuration.contentMode = contentMode
         syncConfiguration()
-        core.layout(size: bounds.size)
+        core.layout(size: bounds.size, contentMode: contentMode)
     }
     
     /// 在用户配置的回调之外追加 delegate 通知,再交给 core。
@@ -73,13 +72,14 @@ class SVGAPlayer: UIView {
     
     // MARK: - Layout
     
+    /// 动画的缩放方式直接使用 UIView 自身的 contentMode,默认与系统一致(.scaleToFill)。
     override var contentMode: UIView.ContentMode {
-        didSet { configuration.contentMode = contentMode }
+        didSet { core.layout(size: bounds.size, contentMode: contentMode) }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        core.layout(size: bounds.size)
+        core.layout(size: bounds.size, contentMode: contentMode)
     }
     
     /// 与原版一致:从父视图移除时停止并清空(不受 clearsAfterStop 影响)。
