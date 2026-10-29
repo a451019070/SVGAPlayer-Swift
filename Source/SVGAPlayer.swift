@@ -71,26 +71,6 @@ class SVGAPlayer: UIView {
         core.apply(config)
     }
     
-    // MARK: - Configuration Shortcuts
-    
-    /// 播放次数。0 表示无限循环。
-    var loops: Int {
-        get { configuration.loopCount }
-        set { configuration.loopCount = newValue }
-    }
-    
-    /// 播放结束 / `stopAnimation()` 时是否清空画面。默认 true。
-    var clearsAfterStop: Bool {
-        get { configuration.clearsAfterStop }
-        set { configuration.clearsAfterStop = newValue }
-    }
-    
-    /// `clearsAfterStop == false` 时播放结束停留的帧。
-    var fillMode: SVGAFillMode {
-        get { configuration.fillMode }
-        set { configuration.fillMode = newValue }
-    }
-    
     // MARK: - Layout
     
     override var contentMode: UIView.ContentMode {
@@ -123,8 +103,7 @@ class SVGAPlayer: UIView {
     
     /// 从第 0 帧开始播放。
     func startAnimation() {
-        core.stop(clear: false)
-        core.play()
+        core.startAnimation()
     }
     
     @available(*, deprecated, renamed: "startAnimation")
@@ -133,26 +112,27 @@ class SVGAPlayer: UIView {
     }
     
     /// 从当前帧继续播放(音频同步定位)。
-    /// 未播放过或已被清空时从头播放;已播完(达到 loops)时从头重播;正在播放时无效果。
+    /// 从当前帧继续播放;已播完(达到 loops)时从头播放;正在播放时无效果。
     func resumeAnimation() {
-        core.play()
+        core.resumeAnimation()
     }
     
     func pauseAnimation() {
-        core.pause()
+        core.pauseAnimation()
     }
     
-    /// 停止,是否清空由 `clearsAfterStop` 决定。
+    /// 停止(与原版一致),是否清空由 `clearsAfterStop` 决定。不清空时画面停在当前帧,不受 fillMode 影响。
     func stopAnimation() {
-        core.stop(clear: clearsAfterStop)
+        core.stopAnimation(clearAfterStop: clearsAfterStop)
     }
     
     func stopAnimation(clearAfterStop: Bool) {
-        core.stop(clear: clearAfterStop)
+        core.stopAnimation(clearAfterStop: clearAfterStop)
     }
-    
-    // MARK: - Dynamic Object
-    
+}
+
+// MARK: - Dynamic Object
+extension SVGAPlayer {
     func setAttributedText(_ attributedText: NSAttributedString, forKey key: String) {
         configuration.dynamic.texts[key] = attributedText
     }
@@ -183,6 +163,27 @@ class SVGAPlayer: UIView {
     /// 清除所有动态图片、文本、隐藏、自绘设置。
     func clearDynamicObjects() {
         configuration.dynamic = SVGADynamicContent()
+    }
+}
+
+// MARK: - Configuration Shortcuts
+extension SVGAPlayer {
+    /// 播放次数。0 表示无限循环。
+    var loops: Int {
+        get { configuration.loopCount }
+        set { configuration.loopCount = newValue }
+    }
+    
+    /// 播放结束 / `stopAnimation()` 时是否清空画面。默认 true。
+    var clearsAfterStop: Bool {
+        get { configuration.clearsAfterStop }
+        set { configuration.clearsAfterStop = newValue }
+    }
+    
+    /// `clearsAfterStop == false` 时播放结束停留的帧。
+    var fillMode: SVGAFillMode {
+        get { configuration.fillMode }
+        set { configuration.fillMode = newValue }
     }
 }
 

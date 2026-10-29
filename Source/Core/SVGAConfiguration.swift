@@ -19,10 +19,11 @@ struct SVGADynamicContent {
 }
 
 /// 播放结束(达到 loopCount)且 `clearsAfterStop == false` 时停留的帧。
+/// 只影响播放完成,不影响 stopAnimation(与原版一致)。
 enum SVGAFillMode {
     /// 停在最后一帧。
     case forward
-    /// 回到第一帧。
+    /// 跳到第一帧。
     case backward
 }
 
@@ -32,7 +33,7 @@ struct SVGAConfiguration {
     var loopCount = 0
     /// 播放结束 / 停止时是否清空画面(与原版一致,默认 true)。
     var clearsAfterStop = true
-    /// `clearsAfterStop == false` 时,播放结束后停留的帧。
+    /// `clearsAfterStop == false` 时,播放结束后停留的帧。默认停在最后一帧。
     var fillMode: SVGAFillMode = .forward
     var dynamic = SVGADynamicContent()
     /// 播放完指定次数后回调(主线程)。闭包无法比较,每次 apply 都会直接覆盖。

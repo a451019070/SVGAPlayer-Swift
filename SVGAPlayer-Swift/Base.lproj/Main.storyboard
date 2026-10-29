@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -123,21 +123,61 @@
                                     <action selector="playLast:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vrl-se-dKz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMS-rz-Zes">
+                                <rect key="frame" x="47.333333333333336" y="651.33333333333337" width="70.333333333333314" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="pause"/>
+                                <connections>
+                                    <action selector="pause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hF4-RH-581"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhE-hg-ygM">
+                                <rect key="frame" x="42" y="693.66666666666663" width="81" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="resume"/>
+                                <connections>
+                                    <action selector="resume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZdV-hH-4MA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oOW-Tp-s5Q">
+                                <rect key="frame" x="294.66666666666669" y="651.33333333333337" width="57.666666666666686" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="stop"/>
+                                <connections>
+                                    <action selector="stop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2hs-lJ-DPY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OpZ-sQ-pnv">
+                                <rect key="frame" x="295.66666666666669" y="693.66666666666663" width="55.333333333333314" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="play"/>
+                                <connections>
+                                    <action selector="play:" destination="BYZ-38-t0r" eventType="touchUpInside" id="caH-jM-DGG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ge6-8J-fz4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Eu-Nw-eGD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PTB-9D-mKe" secondAttribute="trailing" constant="20" id="0nI-fD-DOe"/>
+                            <constraint firstItem="PTB-9D-mKe" firstAttribute="top" secondItem="LhE-hg-ygM" secondAttribute="bottom" constant="10" id="3ec-eS-l9z"/>
+                            <constraint firstItem="OpZ-sQ-pnv" firstAttribute="centerY" secondItem="LhE-hg-ygM" secondAttribute="centerY" id="3fb-d2-wtL"/>
                             <constraint firstItem="hga-9o-al2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="51r-hj-eGx"/>
                             <constraint firstItem="ge6-8J-fz4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="EIc-u3-UdL"/>
+                            <constraint firstItem="LhE-hg-ygM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="42" id="ERF-40-kfG"/>
+                            <constraint firstItem="OpZ-sQ-pnv" firstAttribute="centerX" secondItem="oOW-Tp-s5Q" secondAttribute="centerX" id="Eno-5X-jtT"/>
+                            <constraint firstItem="LhE-hg-ygM" firstAttribute="top" secondItem="qMS-rz-Zes" secondAttribute="bottom" constant="8" id="Oui-zK-fRh"/>
                             <constraint firstAttribute="bottom" secondItem="PTB-9D-mKe" secondAttribute="bottom" constant="34" id="PFD-WI-70g"/>
+                            <constraint firstItem="oOW-Tp-s5Q" firstAttribute="centerY" secondItem="qMS-rz-Zes" secondAttribute="centerY" id="cxC-LM-cin"/>
                             <constraint firstItem="PTB-9D-mKe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="gGU-fO-xzC"/>
                             <constraint firstItem="w6f-3i-Phb" firstAttribute="centerY" secondItem="hga-9o-al2" secondAttribute="centerY" id="i9T-Bm-Q3M"/>
                             <constraint firstItem="w6f-3i-Phb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="49" id="lJM-Al-tqF"/>
                             <constraint firstAttribute="trailing" secondItem="w6f-3i-Phb" secondAttribute="trailing" constant="20" id="oFp-Hf-rjh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OpZ-sQ-pnv" secondAttribute="trailing" constant="42" id="oRH-82-coe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ge6-8J-fz4" secondAttribute="trailing" id="pbR-Kp-vXP"/>
                             <constraint firstItem="ge6-8J-fz4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tnt-Nx-aAf"/>
+                            <constraint firstItem="LhE-hg-ygM" firstAttribute="centerX" secondItem="qMS-rz-Zes" secondAttribute="centerX" id="uiK-X8-Eso"/>
                         </constraints>
                     </view>
                     <toolbarItems/>

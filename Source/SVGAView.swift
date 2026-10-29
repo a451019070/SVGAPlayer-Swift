@@ -47,15 +47,15 @@ struct SVGAView: UIViewRepresentable {
         core.setVideoEntity(entity)
         
         if isPlaying {
-            core.play()
+            core.resumeAnimation()
         } else {
-            core.pause()
+            core.pauseAnimation()
         }
     }
     
     static func dismantleUIView(_ uiView: SVGAHostView, coordinator: Coordinator) {
         uiView.onLayout = nil
-        coordinator.core.stop()
+        coordinator.core.stopAnimation()
     }
     
     final class Coordinator {

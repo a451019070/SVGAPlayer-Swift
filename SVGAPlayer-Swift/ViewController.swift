@@ -67,7 +67,22 @@ class ViewController: UIViewController {
     }
     
     
-
+    @IBAction func pause(_ sender: Any) {
+        player.pauseAnimation()
+    }
+    
+    @IBAction func resume(_ sender: Any) {
+        player.resumeAnimation()
+    }
+    
+    @IBAction func stop(_ sender: Any) {
+        player.stopAnimation(clearAfterStop: false)
+    }
+    
+    @IBAction func play(_ sender: Any) {
+        player.startAnimation()
+    }
+    
     @IBAction func changeToWhite(_ sender: UIButton) {
         player.backgroundColor = sender.backgroundColor
         colorStackView.backgroundColor = sender.backgroundColor
