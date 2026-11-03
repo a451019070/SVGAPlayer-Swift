@@ -163,6 +163,17 @@ final class SVGAHostView: UIView {
     
     var onLayout: ((CGSize, UIView.ContentMode) -> Void)?
     
+    /// 默认 `.scaleAspectFit`;SVGAView 设置了 `.contentMode(...)` 时会覆盖。
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentMode = .scaleAspectFit
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        contentMode = .scaleAspectFit
+    }
+    
     override var contentMode: UIView.ContentMode {
         didSet { onLayout?(bounds.size, contentMode) }
     }

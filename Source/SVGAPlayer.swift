@@ -35,8 +35,10 @@ class SVGAPlayer: UIView {
         didSet { syncConfiguration() }
     }
     
+    /// 代码创建时默认 `.scaleAspectFit`(完整显示、居中);storyboard / xib 创建时沿用 IB 里的值。
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentMode = .scaleAspectFit
         setup()
     }
     
