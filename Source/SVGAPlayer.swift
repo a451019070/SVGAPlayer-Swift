@@ -131,6 +131,37 @@ class SVGAPlayer: UIView {
     }
 }
 
+// MARK: - Configuration Shortcuts
+extension SVGAPlayer {
+    /// 播放次数。0 表示无限循环。
+    var loops: Int {
+        get { configuration.loopCount }
+        set { configuration.loopCount = newValue }
+    }
+    
+    /// 播放结束 / `stopAnimation()` 时是否清空画面。默认 true。
+    var clearsAfterStop: Bool {
+        get { configuration.clearsAfterStop }
+        set { configuration.clearsAfterStop = newValue }
+    }
+    
+    /// `clearsAfterStop == false` 时播放结束停留的帧。
+    var fillMode: SVGAFillMode {
+        get { configuration.fillMode }
+        set { configuration.fillMode = newValue }
+    }
+    
+    var onFinish: SVGAConfiguration.FinishBlock?{
+        get{ configuration.onFinish }
+        set{ configuration.onFinish = newValue }
+    }
+    
+    var onFrame: SVGAConfiguration.FrameBlock?{
+        get{ configuration.onFrame }
+        set{ configuration.onFrame = newValue }
+    }
+}
+
 // MARK: - Dynamic Object
 extension SVGAPlayer {
     func setAttributedText(_ attributedText: NSAttributedString, forKey key: String) {
@@ -166,26 +197,7 @@ extension SVGAPlayer {
     }
 }
 
-// MARK: - Configuration Shortcuts
-extension SVGAPlayer {
-    /// 播放次数。0 表示无限循环。
-    var loops: Int {
-        get { configuration.loopCount }
-        set { configuration.loopCount = newValue }
-    }
-    
-    /// 播放结束 / `stopAnimation()` 时是否清空画面。默认 true。
-    var clearsAfterStop: Bool {
-        get { configuration.clearsAfterStop }
-        set { configuration.clearsAfterStop = newValue }
-    }
-    
-    /// `clearsAfterStop == false` 时播放结束停留的帧。
-    var fillMode: SVGAFillMode {
-        get { configuration.fillMode }
-        set { configuration.fillMode = newValue }
-    }
-}
+
 
 // MARK: - 旧实现(已迁移到 SVGAPlayerCore)
 

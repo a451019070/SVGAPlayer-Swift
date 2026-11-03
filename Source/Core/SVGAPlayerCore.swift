@@ -104,25 +104,30 @@ final class SVGAPlayerCore {
         clearAudios()
     }
     
-    /// 停止(与原版一致):不改变帧位置,也不受 fillMode 影响。
-    /// clearAfterStop 为 false 时画面停在当前帧;为 true 时清空画面。
+    /// 停止。clearAfterStop 为 true 时清空画面;为 false 时按 fillMode 停留:
+    /// `.forward` 最后一帧、`.backward` 第一帧、`.current` 当前帧。
     func stopAnimation(clearAfterStop: Bool = true) {
         pauseAnimation()
         if clearAfterStop {
             clear()
+            return
         }
+        let lastFrame = max((videoItem?.frames ?? 0) - 1, 0)
+        switch configuration.fillMode {
+        case .forward: currentFrame = lastFrame
+        case .backward: currentFrame = 0
+        case .current: break
+        }
+        if drawLayer == nil {
+            draw()
+        }
+        update()
     }
     
-    /// 与原版一致:先 stop,再按 fillMode 跳帧。
+    /// 播完:此时 currentFrame 已越界,先落到最后一帧,再按 stop 逻辑处理(`.current` 即最后一帧)。
     private func finish(totalFrames: Int) {
+        currentFrame = max(totalFrames - 1, 0)
         stopAnimation(clearAfterStop: configuration.clearsAfterStop)
-        switch configuration.fillMode {
-        case .forward: currentFrame = max(totalFrames - 1, 0)
-        case .backward: currentFrame = 0
-        }
-        if !configuration.clearsAfterStop {
-            update()
-        }
         configuration.onFinish?()
     }
     

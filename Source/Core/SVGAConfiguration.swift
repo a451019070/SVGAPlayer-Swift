@@ -18,26 +18,31 @@ struct SVGADynamicContent {
     var drawings: [String: SVGAPlayerDynamicDrawingBlock] = [:]
 }
 
-/// 播放结束(达到 loopCount)且 `clearsAfterStop == false` 时停留的帧。
-/// 只影响播放完成,不影响 stopAnimation(与原版一致)。
+/// `clearsAfterStop == false` 时,停止或播放结束后停留的帧。
+/// 同时作用于 stopAnimation 和播放完成。
 enum SVGAFillMode {
     /// 停在最后一帧。
     case forward
     /// 跳到第一帧。
     case backward
+    /// 停在当前帧(播放完成时即最后一帧)。
+    case current
 }
 
 /// contentMode 不在这里:以宿主 UIView 自身的 contentMode 为准。
 struct SVGAConfiguration {
+    typealias FinishBlock = () -> Void
+    typealias FrameBlock = (_ frame: Int, _ percentage: CGFloat) -> Void
+
     /// 播放次数。0 表示无限循环。
     var loopCount = 0
     /// 播放结束 / 停止时是否清空画面(与原版一致,默认 true)。
     var clearsAfterStop = true
-    /// `clearsAfterStop == false` 时,播放结束后停留的帧。默认停在最后一帧。
-    var fillMode: SVGAFillMode = .forward
+    /// `clearsAfterStop == false` 时,停止 / 播放结束后停留的帧。默认停在当前帧。
+    var fillMode: SVGAFillMode = .current
     var dynamic = SVGADynamicContent()
     /// 播放完指定次数后回调(主线程)。闭包无法比较,每次 apply 都会直接覆盖。
-    var onFinish: (() -> Void)?
+    var onFinish: FinishBlock?
     /// 每播放一帧回调(主线程)。percentage = (frame + 1) / 总帧数。
-    var onFrame: ((_ frame: Int, _ percentage: CGFloat) -> Void)?
+    var onFrame: FrameBlock?
 }
