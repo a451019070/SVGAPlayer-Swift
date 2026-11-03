@@ -108,6 +108,26 @@ final class SVGAContentLayer: CALayer {
         dynamicDrawingBlock?(self, frame)
     }
     
+    // MARK: - Bitmap
+    
+    /// 替换位图内容,不重建图层。原本没有位图图层时按需创建;传 nil 清空内容。
+    func setBitmap(_ image: UIImage?) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        defer { CATransaction.commit() }
+        
+        if let bitmapLayer {
+            bitmapLayer.contents = image?.cgImage
+        } else if let image {
+            let bitmapLayer = SVGABitmapLayer(frames: frames)
+            bitmapLayer.contents = image.cgImage
+            // 位图在矢量图层下方,与创建时的层级一致
+            insertSublayer(bitmapLayer, at: 0)
+            self.bitmapLayer = bitmapLayer
+            bitmapLayer.frame = bounds
+        }
+    }
+    
     // MARK: - Layout
     
     private func layoutSubContent() {

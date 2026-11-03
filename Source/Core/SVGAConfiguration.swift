@@ -12,10 +12,16 @@ import UIKit
 struct SVGADynamicContent {
     /// 动态文本。删除已有的 key 会触发图层树重建。
     var texts: [String: NSAttributedString] = [:]
-    /// 替换图片。变化会触发图层树重建。
-    var images: [String: UIImage] = [:]
+    /// 替换图片。key 在写入时会去掉扩展名("banner.png" 与 "banner" 等价),与原版一致。
+    /// 只更新对应图层内容,不重建图层树。请通过 `setImage(_:forKey:)` 写入。
+    private(set) var images: [String: UIImage] = [:]
     var hiddens: [String: Bool] = [:]
     var drawings: [String: SVGAPlayerDynamicDrawingBlock] = [:]
+    
+    /// 设置或移除(传 nil)替换图片。
+    mutating func setImage(_ image: UIImage?, forKey key: String) {
+        images[(key as NSString).deletingPathExtension] = image
+    }
 }
 
 /// `clearsAfterStop == false` 时,停止或播放结束后停留的帧。

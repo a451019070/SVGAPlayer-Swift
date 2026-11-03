@@ -140,7 +140,7 @@ extension SVGAView {
     
     /// 替换图片。传 nil 移除替换,恢复原图。
     func image(_ image: UIImage?, forKey key: String) -> SVGAView {
-        configure { $0.dynamic.images[key] = image }
+        configure { $0.dynamic.setImage(image, forKey: key) }
     }
     
     func hidden(_ hidden: Bool, forKey key: String) -> SVGAView {

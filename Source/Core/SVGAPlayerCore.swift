@@ -268,12 +268,20 @@ extension SVGAPlayerCore{
     private func applyDynamic(_ new: SVGADynamicContent, old: SVGADynamicContent) {
         guard drawLayer != nil else { return }
         
-        // 图片变化、或有文本被移除(已挂载的文字图层无法单独摘除)时,重建图层树
+        // 有文本被移除时重建图层树(已挂载的文字图层无法单独摘除)
         let textRemoved = old.texts.keys.contains { new.texts[$0] == nil }
-        if new.images != old.images || textRemoved {
+        if textRemoved {
             clear()
             draw()
             return
+        }
+        
+        // 图片只更新对应图层的内容,不重建、不打断播放和音频;去掉替换时恢复原图
+        for key in Set(old.images.keys).union(new.images.keys) where old.images[key] != new.images[key] {
+            let bitmap = new.images[key] ?? videoItem?.images[key]
+            for contentLayer in contentLayers where contentLayer.imageKey.map({ ($0 as NSString).deletingPathExtension }) == key {
+                contentLayer.setBitmap(bitmap)
+            }
         }
         
         for (key, text) in new.texts where old.texts[key] != text {

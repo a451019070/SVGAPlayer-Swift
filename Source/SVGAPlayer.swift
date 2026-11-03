@@ -172,7 +172,7 @@ extension SVGAPlayer {
     
     /// 替换图片。传 nil 移除替换,恢复原图。
     func setImage(_ image: UIImage?, forKey key: String) {
-        configuration.dynamic.images[key] = image
+        configuration.dynamic.setImage(image, forKey: key)
     }
     
     /// 下载图片后替换。失败时静默忽略。
