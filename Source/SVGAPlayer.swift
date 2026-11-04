@@ -123,6 +123,16 @@ class SVGAPlayer: UIView {
         core.pauseAnimation()
     }
     
+    /// 跳到指定帧并暂停在那里;`andPlay` 为 true 时从该帧继续播放。帧号越界时忽略。
+    func stepToFrame(_ frame: Int, andPlay: Bool = false) {
+        core.stepToFrame(frame, andPlay: andPlay)
+    }
+    
+    /// 跳到指定百分比(0~1)并暂停在那里;`andPlay` 为 true 时从该处继续播放。
+    func stepToPercentage(_ percentage: CGFloat, andPlay: Bool = false) {
+        core.stepToPercentage(percentage, andPlay: andPlay)
+    }
+    
     /// 停止(与原版一致),是否清空由 `clearsAfterStop` 决定。不清空时画面停在当前帧,不受 fillMode 影响。
     func stopAnimation() {
         core.stopAnimation(clearAfterStop: clearsAfterStop)

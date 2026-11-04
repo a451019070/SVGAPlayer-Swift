@@ -97,6 +97,35 @@ final class SVGAPlayerCore {
         displayLink = link
     }
     
+    /// 跳到指定帧。先暂停并显示该帧;`andPlay` 为 true 时从该帧继续播放。
+    /// 帧号越界、或还没有资源时忽略(与原版一致)。不触发 onFrame 回调。
+    func stepToFrame(_ frame: Int, andPlay: Bool) {
+        guard let videoItem, frame >= 0, frame < videoItem.frames else { return }
+        pauseAnimation()
+        if drawLayer == nil {
+            draw()
+        }
+        // 已播完后跳帧视为重新开始计数,否则 resume 会把位置重置回第 0 帧
+        if isFinished {
+            playedLoops = 0
+        }
+        currentFrame = frame
+        update()
+        if andPlay {
+            resumeAnimation()
+        }
+    }
+    
+    /// 跳到指定百分比(0~1)对应的帧。
+    func stepToPercentage(_ percentage: CGFloat, andPlay: Bool) {
+        let totalFrames = videoItem?.frames ?? 0
+        var frame = Int(CGFloat(totalFrames) * percentage)
+        if frame >= totalFrames && frame > 0 {
+            frame = totalFrames - 1
+        }
+        stepToFrame(frame, andPlay: andPlay)
+    }
+    
     /// 暂停,保留当前帧。
     func pauseAnimation() {
         displayLink?.invalidate()
