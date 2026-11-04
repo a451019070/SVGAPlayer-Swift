@@ -45,9 +45,10 @@ final class SVGAPlayerCore {
     deinit {
         displayLink?.invalidate()
     }
-    
-    // MARK: - Entity
-    
+}
+
+// MARK: - Entity
+extension SVGAPlayerCore {
     /// 设置资源。相同实例重复设置会被忽略。
     /// 播放中:不中断,从新资源第 0 帧接着播(帧率换成新资源的);未播放:只显示第 0 帧。
     /// 传 nil 时清空画面并停止。
@@ -65,9 +66,10 @@ final class SVGAPlayerCore {
         }
         draw()
     }
-    
-    // MARK: - Playback
-    
+}
+
+// MARK: - Playback
+extension SVGAPlayerCore {
     /// 从第 0 帧重新播放。
     func startAnimation() {
         pauseAnimation()
@@ -160,26 +162,7 @@ final class SVGAPlayerCore {
         configuration.onFinish?()
     }
     
-    // MARK: - Draw
-    
-    /// 移除并释放图层树(不停止播放,不丢失 videoItem)。
-    func clear() {
-        clearAudios()
-        audioLayers = []
-        contentLayers = []
-        drawLayer?.removeFromSuperlayer()
-        drawLayer = nil
-    }
-    
-    private func clearAudios() {
-        for audioLayer in audioLayers where audioLayer.audioPlaying {
-            audioLayer.audioPlayer?.stop()
-            audioLayer.audioPlaying = false
-        }
-    }
-}
-
-extension SVGAPlayerCore {
+    /// 由 DisplayLink 每帧驱动。
     fileprivate func nextFrame() {
         let totalFrames = videoItem?.frames ?? 0
         currentFrame += 1
@@ -200,7 +183,17 @@ extension SVGAPlayerCore {
     }
 }
 
+// MARK: - Draw
 extension SVGAPlayerCore {
+    /// 移除并释放图层树(不停止播放,不丢失 videoItem)。
+    func clear() {
+        clearAudios()
+        audioLayers = []
+        contentLayers = []
+        drawLayer?.removeFromSuperlayer()
+        drawLayer = nil
+    }
+    
     private func draw() {
         guard let videoItem else { return }
         let dynamic = configuration.dynamic
@@ -266,6 +259,14 @@ extension SVGAPlayerCore {
         }
         CATransaction.commit()
         
+        syncAudios()
+    }
+}
+
+// MARK: - Audio
+extension SVGAPlayerCore {
+    /// 按当前帧启停音频。仅在播放中生效。
+    private func syncAudios() {
         guard isPlaying, !audioLayers.isEmpty else { return }
         for audioLayer in audioLayers {
             let item = audioLayer.audioItem
@@ -283,10 +284,17 @@ extension SVGAPlayerCore {
             }
         }
     }
+    
+    private func clearAudios() {
+        for audioLayer in audioLayers where audioLayer.audioPlaying {
+            audioLayer.audioPlayer?.stop()
+            audioLayer.audioPlaying = false
+        }
+    }
 }
 
 // MARK: - Configuration
-extension SVGAPlayerCore{
+extension SVGAPlayerCore {
     /// 应用配置。内部按差异更新,可在 SwiftUI 的 updateUIView 中频繁调用。
     func apply(_ newConfiguration: SVGAConfiguration) {
         let old = configuration
@@ -347,7 +355,7 @@ extension SVGAPlayerCore {
 }
 
 // MARK: - Layout
-extension SVGAPlayerCore{
+extension SVGAPlayerCore {
     /// 宿主尺寸或 contentMode 变化时调用。contentMode 由宿主 UIView 提供。
     func layout(size: CGSize, contentMode: UIView.ContentMode) {
         guard size != viewSize || contentMode != self.contentMode else { return }
@@ -367,9 +375,7 @@ extension SVGAPlayerCore{
                                              contentMode: contentMode)
         CATransaction.commit()
     }
-}
-
-extension SVGAPlayerCore {
+    
     /// 计算 drawLayer 需要的变换。纯函数,不依赖任何视图。
     static func transform(videoSize: CGSize, viewSize: CGSize, contentMode: UIView.ContentMode) -> CATransform3D {
         
@@ -424,10 +430,6 @@ extension SVGAPlayerCore {
                                  scaleY: viewSize.height / videoSize.height)
         }
     }
-}
-
-extension SVGAPlayerCore {
-    
 }
 
 /// CADisplayLink 会强引用 target,用弱引用代理避免循环引用。
