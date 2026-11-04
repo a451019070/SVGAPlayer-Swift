@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "SVGAPlayer-Swift",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(name: "SVGAPlayer-Swift", targets: ["SVGAPlayer-Swift"])
     ],
